@@ -1,0 +1,6 @@
+ERROR :: Validator  || March 23rd 2021, 2:05:06 pm || value: "Boris Vian" is "Invalid value" as "nom" in "body" || 
+March 23rd 2021, 2:20:27 pm || "Modify auteur 2 as BorisVian and vivant: 0"
+March 23rd 2021, 2:20:42 pm || "Display Auteur with ID 2"
+March 23rd 2021, 2:22:55 pm || "Modify auteur 2 as Boris Vian and vivant: 0"
+March 23rd 2021, 2:22:59 pm || "Display Auteur with ID 2"
+March 23rd 2021, 2:23:59 pm || "Display Auteur with ID 2"

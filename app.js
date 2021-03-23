@@ -36,7 +36,7 @@ app.get('/auteur', (req, res) => {
     })
 });
 //------------------ Ajouter un auteur --------------------//
-app.post('/auteur', [check('nom').isAlpha(), check('vivant').isBoolean(), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
+app.post('/auteur', [check('nom').matches(/^[A-Za-z '-]+$/), check('vivant').isBoolean(), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
@@ -86,20 +86,20 @@ app.get('/auteur/:Id', [check('Id').isNumeric(), check('Id').isLength({ min: 1 }
 });
 
 //----------------- Mettre a jour auteur par ID ---------------------//
-app.put('/auteur/:Id', [check('Id').isNumeric(), check('nom').isAlpha(), check('vivant').isBoolean(), check('Id').isLength({ min: 1 }), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
+app.put('/auteur/:Id', [check('Id').isNumeric(), check('nom').matches(/^[A-Za-z '-]+$/), check('vivant').isBoolean(), check('Id').isLength({ min: 1 }), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
         return res.status(422).json({ errors: errors.array() })
     }
-    let user = new Personne(req.body.nom, req.body.vivant)
+    let auteur = new Auteur(req.body.nom, req.body.vivant)
     auteur.id_auteur = req.params.Id
     mysqlUtilities.modifyAuteurById((results, error) => {
         if (!error) {
 
 
             res.send(results);
-            let content = `Modify auteur ${auteur.id_auteur} as ${auteur.nom} and vivant: ${auteur.vivant}`;
+            let content = `Modify auteur with ID:${auteur.id_auteur} as ${auteur.nom} and vivant: ${auteur.vivant}`;
             logUtilities.userEntryLog(content);
 
 
@@ -240,7 +240,7 @@ app.get('/livre', (req, res) => {
 });
 
 //----------------- Ajouter un livre ---------------------//
-app.post('/livre', [check('nom').isAlpha(), check('type').isAlpha(), check('nom').isLength({ min: 1 }), check('type').isLength({ min: 1 })], (req, res) => {
+app.post('/livre', [check('nom').matches(/^[A-Za-z '-]+$/), check('type').matches(/^[A-Za-z '-]+$/), check('nom').isLength({ min: 1 }), check('type').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
@@ -294,7 +294,7 @@ app.get('/spe/:Id', [check('Id').isNumeric(), check('Id').isLength({ min: 1 })],
 
 //----------------- Modifier livre par ID ---------------------//
 
-app.put('/livre/:Id', [check('Id').isNumeric(), check('nom').isAlpha(), check('type').isAlpha(), check('Id').isLength({ min: 1 }), check('nom').isLength({ min: 1 }), check('type').isLength({ min: 1 })], (req, res) => {
+app.put('/livre/:Id', [check('Id').isNumeric(), check('nom').matches(/^[A-Za-z '-]+$/), check('type').matches(/^[A-Za-z '-]+$/), check('Id').isLength({ min: 1 }), check('nom').isLength({ min: 1 }), check('type').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
