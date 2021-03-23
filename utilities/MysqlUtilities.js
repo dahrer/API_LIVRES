@@ -7,13 +7,34 @@ const config = {
 };
 
 class MysqlUtilities {
+    /*
+        //----------------- Recuperer nombre de livres -----------------//
+        getNbLivre(callback) {
+            const connection = mysql.createConnection(config);
+            connection.connect();
+            connection.query(`SELECT count(id_livre) nb_livres FROM livre`, (error, results) => {
+                callback(results, error);
+            })
+            connection.end()
+        };
+
+        //----------------- Recuperer nombre d'auteurs -----------------//
+        getNbAuteur(callback) {
+            const connection = mysql.createConnection(config);
+            connection.connect();
+            connection.query(`SELECT count(id_auteur) nb_auteurs FROM auteur`, (error, results) => {
+                callback(results, error);
+            })
+            connection.end()
+        };
+    */
     //--------------------------------------//
     //--------------- AUTEUR ---------------//
     //--------------------------------------//
     getAuteur(callback) {
         const connection = mysql.createConnection(config);
         connection.connect();
-        connection.query(`SELECT nom,vivant  FROM Auteur`, (error, results) => {
+        connection.query(`SELECT nom,vivant  FROM auteur`, (error, results) => {
             callback(results, error);
         })
         connection.end()
@@ -22,7 +43,7 @@ class MysqlUtilities {
     postAuteur(callback, auteur) {
         const connection = mysql.createConnection(config);
         connection.connect();
-        connection.query(`INSERT INTO Auteur (nom,vivant) Values (?,?)`, [auteur.nom, auteur.vivant], (error, result) => {
+        connection.query(`INSERT INTO auteur (nom,vivant) Values (?,?)`, [auteur.nom, auteur.vivant], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -34,7 +55,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`SELECT nom,vivant FROM Auteur WHERE id_auteur=(?)`, [id], (error, result) => {
+        connection.query(`SELECT nom,vivant FROM auteur WHERE id_auteur=(?)`, [id], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -44,7 +65,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`UPDATE Auteur SET nom=(?), vivant=(?) WHERE id_auteur=(?)`, [auteur.nom, auteur.vivant, auteur.id_auteur], (error, result) => {
+        connection.query(`UPDATE auteur SET nom=(?), vivant=(?) WHERE id_auteur=(?)`, [auteur.nom, auteur.vivant, auteur.id_auteur], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -54,7 +75,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`DELETE FROM Auteur WHERE id_auteur=(?)`, [id], (error, result) => {
+        connection.query(`DELETE FROM auteur WHERE id_auteur=(?)`, [id], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -100,7 +121,7 @@ class MysqlUtilities {
     getLivre(callback) {
         const connection = mysql.createConnection(config);
         connection.connect();
-        connection.query(`SELECT nom,type  FROM Livre`, (error, results) => {
+        connection.query(`SELECT nom,type  FROM livre`, (error, results) => {
             callback(results, error);
 
 
@@ -111,7 +132,7 @@ class MysqlUtilities {
     postLivre(callback, livre) {
         const connection = mysql.createConnection(config);
         connection.connect();
-        connection.query(`INSERT INTO Livre (nom,type) Values (?,?)`, [livre.nom, livre.type], (error, result) => {
+        connection.query(`INSERT INTO livre (nom,type) Values (?,?)`, [livre.nom, livre.type], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -125,7 +146,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`SELECT nom,type FROM Livre WHERE id_livre=(?)`, [id], (error, result) => {
+        connection.query(`SELECT nom,type FROM livre WHERE id_livre=(?)`, [id], (error, result) => {
             callback(result, error)
         })
         connection.end()
@@ -135,7 +156,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`UPDATE Livre SET nom=(?), type=(?) WHERE id_livre=(?)`, [livre.nom, livre.type, livre.id_livre], (error, result) => {
+        connection.query(`UPDATE livre SET nom=(?), type=(?) WHERE id_livre=(?)`, [livre.nom, livre.type, livre.id_livre], (error, result) => {
             callback(result, error)
         })
         connection.end()
