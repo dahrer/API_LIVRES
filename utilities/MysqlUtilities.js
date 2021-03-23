@@ -66,7 +66,7 @@ class MysqlUtilities {
         const connection = mysql.createConnection(config);
         connection.connect();
 
-        connection.query(`SELECT DISTINCT livre.nom,livre.type,auteur.nom AS auteur FROM livre,auteur,contenir WHERE contenir.id_auteur=auteur.id_auteur AND livre.id_livre=contenir.id_livre AND auteur.id_auteur=(?)  `, [contenir.id_p], (error, result) => {
+        connection.query(`SELECT DISTINCT livre.nom,livre.type,auteur.nom AS auteur FROM livre,auteur,contenir WHERE contenir.id_auteur=auteur.id_auteur AND livre.id_livre=contenir.id_livre AND auteur.id_auteur=(?)  `, [contenir.id_auteur], (error, result) => {
             callback(result, error)
         })
         connection.end()
