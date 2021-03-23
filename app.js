@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 app.use(bodyParser.json());
 
 //------------Recuperation utilities---------------//
@@ -19,7 +19,7 @@ const Contenir = require('./beans/Contenir');
 //--------------------------------------//
 
 //----------------- Afficher les auteurs ---------------------//
-app.get('/Auteur', (req, res) => {
+app.get('/auteur', (req, res) => {
     console.log("Liste auteur /")
     mysqlUtilities.getAuteur((results, error) => {
         if (!error) {
@@ -36,7 +36,7 @@ app.get('/Auteur', (req, res) => {
     })
 });
 //------------------ Ajouter un auteur --------------------//
-app.post('/Auteur', [check('nom').isAlpha(), check('vivant').isBoolean(), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
+app.post('/auteur', [check('nom').isAlpha(), check('vivant').isBoolean(), check('nom').isLength({ min: 1 }), check('vivant').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
@@ -170,7 +170,7 @@ app.get('/auteurs/:Id/livre', [check('Id').isNumeric(), check('Id').isLength({ m
 //--------------------------------------------------//
 
 //----------------- Associer auteur a un livre ---------------------//
-pp.post('/auteur/:Id/livre/:Ip', [check('Id').isNumeric(), check('Ip').isNumeric(), check('Id').isLength({ min: 1 }), check('Ip').isLength({ min: 1 })], (req, res) => {
+app.post('/auteur/:Id/livre/:Ip', [check('Id').isNumeric(), check('Ip').isNumeric(), check('Id').isLength({ min: 1 }), check('Ip').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
@@ -345,5 +345,5 @@ app.delete('/livre/:Id', [check('Id').isNumeric(), check('Id').isLength({ min: 1
 
 
 app.listen(port, () => {
-    console.log('http://localhost:${port}')
+    console.log(`http://localhost:${port}`)
 })

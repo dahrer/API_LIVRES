@@ -13,7 +13,7 @@ class MysqlUtilities {
     getAuteur(callback) {
         const connection = mysql.createConnection(config);
         connection.connect();
-        connection.query(`SELECT nom,vivant  FROM Auteurs`, (error, results) => {
+        connection.query(`SELECT nom,vivant  FROM Auteur`, (error, results) => {
             callback(results, error);
         })
         connection.end()
