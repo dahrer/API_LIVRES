@@ -138,7 +138,7 @@ app.delete('/auteur/:Id', [check('Id').isNumeric(), check('Id').isLength({ min: 
 //-----------------------------------------------//
 
 //----------------- Recuperer livres de l'auteur ---------------------//
-app.get('/auteurs/:Id/livre', [check('Id').isNumeric(), check('Id').isLength({ min: 1 })], (req, res) => {
+app.get('/auteur/:Id/livre', [check('Id').isNumeric(), check('Id').isLength({ min: 1 })], (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         logUtilities.validatorErrorLog(errors);
